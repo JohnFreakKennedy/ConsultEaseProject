@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsultEaseDAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3d3f48cfc7a7c9d9a800decef62ecf9d8d00042")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsultEaseDAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsultEaseDAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
