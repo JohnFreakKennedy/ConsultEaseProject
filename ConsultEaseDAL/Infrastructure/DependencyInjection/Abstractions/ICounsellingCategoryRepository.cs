@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ConsultEaseDAL.Entities;
 
-namespace ConsultEaseDAL.Infrastructure.Abstractions;
+namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions;
 
 public interface ICounsellingCategoryRepository
 {

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using ConsultEaseDAL.Context;
 using ConsultEaseDAL.Entities;
-using ConsultEaseDAL.Infrastructure.Abstractions;
-using ConsultEaseDAL.Infrastructure.Implementations.Base;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Implementations.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Implementations;

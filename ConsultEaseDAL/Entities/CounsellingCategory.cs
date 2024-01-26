@@ -7,9 +7,9 @@ namespace ConsultEaseDAL.Entities
     {
         [Key]
         public int Id { get; set; }
+        [MaxLength(30)]
         public string Name { get; set; }
         public int AffectTimeDuration { get; set; }
-
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     }
 }

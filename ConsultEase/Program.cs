@@ -1,25 +1,35 @@
-var builder = WebApplication.CreateBuilder(args);
+using ConsultEaseAPI.Startup;
+using Microsoft.AspNetCore.Identity;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace ConsultEaseAPI;
+public class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.RegisterApplicationServices(builder.Configuration);
+
+        var app = builder.Build();
+        app.ConfigureMiddleware();
+        
+        await using var scope = app.Services.CreateAsyncScope();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        await CreateRolesAsync(roleManager);
+        
+        await app.RunAsync();
+    }
+    
+    private static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
+    {
+        var roles = new List<string> {"Admin", "Professor", "Student"};
+        foreach (var role in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+    }
+   
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

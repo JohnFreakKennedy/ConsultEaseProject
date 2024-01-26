@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ConsultEaseDAL.Infrastructure.Abstractions.Base;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions.Base;
 
 
-namespace ConsultEaseDAL.Infrastructure.Implementations.Base;
+namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Implementations.Base;
 
 public abstract class RepositoryBase<TKey, TEntity>: IRepositoryBase<TKey, TEntity>
     where TEntity: class
@@ -12,13 +12,13 @@ public abstract class RepositoryBase<TKey, TEntity>: IRepositoryBase<TKey, TEnti
 {
     private readonly bool _disposeContex;
     private bool _isDisposed;
-    private DbContext _DbContext { get; set; }
+    private DbContext DbContext { get; set; }
     protected DbSet<TEntity> Table { get; }
     
     protected RepositoryBase(DbContext dbContext)
     {
-        _DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        Table = _DbContext.Set<TEntity>();
+        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        Table = DbContext.Set<TEntity>();
         _disposeContex = false;
     }
 
@@ -30,28 +30,28 @@ public abstract class RepositoryBase<TKey, TEntity>: IRepositoryBase<TKey, TEnti
     public async Task<TEntity?> CreateAsync(TEntity entity)
     {
         var entry = await Table.AddAsync(entity);
-        await _DbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         return entry.Entity;
     }
 
     public async Task<int> UpdateAsync(TEntity entity)
     {   
-        _DbContext.Entry(entity).State = EntityState.Modified;
-        var result = await _DbContext.SaveChangesAsync();
+        DbContext.Entry(entity).State = EntityState.Modified;
+        var result = await DbContext.SaveChangesAsync();
         return result;
     }
 
     public async Task<int> DeleteAsync(TEntity entity)
     {
         Table.Remove(entity);
-        var result = await  _DbContext.SaveChangesAsync();
+        var result = await  DbContext.SaveChangesAsync();
         return result;
     }
 
     protected virtual void Dispose(bool disposing)
     {
         if (_isDisposed) return;
-        if (disposing && _disposeContex) _DbContext?.Dispose();
+        if (disposing && _disposeContex) DbContext?.Dispose();
 
         _isDisposed = true;
     }

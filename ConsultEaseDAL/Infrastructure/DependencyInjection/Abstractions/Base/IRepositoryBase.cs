@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 
-namespace ConsultEaseDAL.Infrastructure.Abstractions.Base;
+namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions.Base;
 
 public interface IRepositoryBase<TKey, TEntity>
 {

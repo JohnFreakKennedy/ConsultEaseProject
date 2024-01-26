@@ -4,14 +4,17 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ConsultEaseDAL.Context;
 using ConsultEaseDAL.Entities;
-using ConsultEaseDAL.Infrastructure.Implementations.Base;
-using ConsultEaseDAL.Infrastructure.Abstractions;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Implementations.Base;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions;
 
 namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Implementations;
 
 public class AppointmentRepository(ConsultEaseDbContext dbContext)
     : RepositoryBase<int, Appointment>(dbContext), IAppointmentRepository
 {
+    public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync() => 
+        await dbContext.Appointments.ToListAsync();
+    
     public async Task<Appointment?> FindByKeyAsync(int key) => 
         await dbContext.Appointments.FindAsync(key);
 
@@ -27,7 +30,7 @@ public class AppointmentRepository(ConsultEaseDbContext dbContext)
 
     public async Task<int> DeleteAsync(Appointment entity) =>
         await DeleteAsync(entity);
-
+    
     public async Task<Appointment?> GetAppointmentByIdAsync(int id) =>
         await FindByKeyAsync(id);
     

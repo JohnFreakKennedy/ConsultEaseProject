@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ConsultEaseDAL.Entities;
-using ConsultEaseDAL.Infrastructure.Abstractions.Base;
+using ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions.Base;
 
-namespace ConsultEaseDAL.Infrastructure.Abstractions;
+namespace ConsultEaseDAL.Infrastructure.DependencyInjection.Abstractions;
 
 public interface IAppointmentRepository: IRepositoryBase<int, Appointment>
 {
-    
+    Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
     Task<Appointment?> GetAppointmentByIdAsync(int id);
     Task<IEnumerable<Appointment>> GetAppointmentsByCounsellorIdAsync(int professorId);
     Task<IEnumerable<Appointment>> GetAppointmentsByStudentIdAsync(int studentId);
